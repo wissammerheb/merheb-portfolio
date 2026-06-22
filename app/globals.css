@@ -1,30 +1,46 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; }
-::selection { background: #4ade80; color: #060709; }
+::selection { background: #34d399; color: #09090b; }
 a { color: inherit; text-decoration: none; }
-:focus-visible { outline: 2px solid #4ade80; outline-offset: 3px; }
+:focus-visible { outline: 2px solid #34d399; outline-offset: 3px; }
 
-/* Stats grid: 4 cols on desktop, 2 on tablet, 2 on mobile */
-.stats-grid {
+/* ── Stats row ── */
+.stats-row {
   grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-/* Medium bento grid: 2 cols on desktop */
+/* ── About grid: 40/60 split ── */
+.about-grid {
+  grid-template-columns: 2fr 3fr;
+}
+
+/* ── Work medium grid: 2 cols ── */
 .medium-grid {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Desktop nav visible, mobile button hidden by default */
-.desktop-nav { display: flex; }
-.mobile-menu-btn { display: none; }
+/* ── Spotlight card image zoom on hover ── */
+.spotlight-card:hover .card-img {
+  transform: scale(1.04);
+}
 
+/* ── Desktop nav: pill visible; hamburger hidden ── */
+.pill-nav { display: flex; }
+.hamburger-btn { display: none !important; }
+
+/* ── Mobile overrides (< 768px) ── */
 @media (max-width: 768px) {
-  .desktop-nav { display: none !important; }
-  .mobile-menu-btn { display: flex !important; }
+  .pill-nav { display: none !important; }
+  .hamburger-btn { display: flex !important; }
 
-  .stats-grid {
+  .stats-row {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr !important;
   }
 
   .medium-grid {
@@ -32,12 +48,7 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * {
