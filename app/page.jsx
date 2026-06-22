@@ -5,8 +5,8 @@ import React, { useEffect, useRef, useState, useCallback, useMemo } from "react"
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const CONTACT = {
-  email:  "hello@merheb.net",
-  github: "https://github.com/wissam-merheb",
+  email:  "wissam@merheb.net",
+  github: "https://github.com/wissammerheb",
 };
 
 const STACK = [
@@ -16,15 +16,16 @@ const STACK = [
   "Flame Engine", "RevenueCat", "Fly.io", "Twilio",
 ];
 
+// aspect: "phone" = portrait 9:16 container, "web" = landscape 16:9 container
 const PROJECTS = [
   {
     slug: "lira",
     title: "Lira",
-    headline: "Every lira\ncounted.",
     year: "2024",
     kind: "Mobile App",
     badge: "Play Store",
-    shot: "/shots/lira.png",
+    aspect: "phone",
+    shots: ["/shots/lira_1.png", "/shots/lira_2.png", "/shots/lira_3.png", "/shots/lira_4.png", "/shots/lira_5.png"],
     accent: "#B8924A",
     tint: "rgba(184,146,74,0.08)",
     blurb: "Family expense tracker with budgets, multi-currency support, nested categories, reminders, and one-tap CSV / PDF exports. Shipped and live on Google Play.",
@@ -34,10 +35,10 @@ const PROJECTS = [
   {
     slug: "chefbasket",
     title: "ChefBasket",
-    headline: "Plan the\nweek. Feed\nthe family.",
     year: "2025",
     kind: "Mobile App",
-    shot: "/shots/chefbasket.png",
+    aspect: "phone",
+    shots: ["/shots/chefbasket_1.png", "/shots/chefbasket_2.png", "/shots/chefbasket_3.png", "/shots/chefbasket_4.png", "/shots/chefbasket_5.png"],
     accent: "#C4633A",
     tint: "rgba(196,99,58,0.08)",
     blurb: "Weekly meal-box planner — build a plan, drain the pantry, split the grocery list across stores. WhatsApp order in one tap.",
@@ -47,10 +48,10 @@ const PROJECTS = [
   {
     slug: "tanke",
     title: "TANKe",
-    headline: "Gas level.\nLive.",
     year: "2024",
     kind: "IoT + Mobile",
-    shot: "/shots/tanke.png",
+    aspect: "phone",
+    shots: ["/shots/tanke.png"],
     accent: "#3A7DB5",
     tint: "rgba(58,125,181,0.08)",
     blurb: "ESP8266 weight sensors stream live fill-level via MQTT to a Flutter app. FCM, SMS, and WhatsApp alerts when gas runs low.",
@@ -60,10 +61,10 @@ const PROJECTS = [
   {
     slug: "yallatuk",
     title: "YallaTuk",
-    headline: "Ride the\ncity.",
     year: "2024",
     kind: "Mobile App",
-    shot: "/shots/yallatuk.png",
+    aspect: "phone",
+    shots: ["/shots/yallatuk.png"],
     accent: "#7B6BD4",
     tint: "rgba(123,107,212,0.08)",
     blurb: "Tuk-tuk ride-hailing for two — rider + driver apps, live map tracking, near-zero infra cost on Fly.io.",
@@ -73,10 +74,10 @@ const PROJECTS = [
   {
     slug: "expiryguard",
     title: "ExpiryGuard",
-    headline: "Waste\nless.",
     year: "2024",
     kind: "Mobile App",
-    shot: "/shots/expiryguard.png",
+    aspect: "phone",
+    shots: ["/shots/expiryguard_1.png", "/shots/expiryguard_2.png", "/shots/expiryguard_3.png", "/shots/expiryguard_4.png", "/shots/expiryguard_5.png"],
     accent: "#4A9B6F",
     tint: "rgba(74,155,111,0.08)",
     blurb: "Track household items by expiry date, get nudges before waste, find donation drop-offs on a live OpenStreetMap layer.",
@@ -86,10 +87,10 @@ const PROJECTS = [
   {
     slug: "cartiq",
     title: "Cartiq",
-    headline: "Cheapest\nbasket wins.",
     year: "2025",
     kind: "Mobile App",
-    shot: "/shots/cartiq.png",
+    aspect: "phone",
+    shots: ["/shots/cartiq.png"],
     accent: "#5A9E82",
     tint: "rgba(90,158,130,0.08)",
     blurb: "Compare grocery prices across supermarkets in real time. Barcode scan, receipt OCR via Gemini, split list across stores.",
@@ -99,11 +100,11 @@ const PROJECTS = [
   {
     slug: "gravit",
     title: "Gravit",
-    headline: "50 levels.\nOne more.",
     year: "2024",
     kind: "Game",
     badge: "Flame Engine",
-    shot: "/shots/gravit.png",
+    aspect: "wide",
+    shots: ["/shots/gravit_1.png", "/shots/gravit_2.png", "/shots/gravit_3.png", "/shots/gravit_4.png", "/shots/gravit_5.png"],
     accent: "#2AABBF",
     tint: "rgba(42,171,191,0.08)",
     blurb: "Arcade tower-stacking across 5 worlds. Firebase leaderboard, AdMob, Google Sign-In — packaged tight for Android.",
@@ -113,10 +114,10 @@ const PROJECTS = [
   {
     slug: "engravia",
     title: "Engravia",
-    headline: "Gifts,\ncrafted live.",
     year: "2023",
     kind: "Web Storefront",
-    shot: "/shots/engravia.png",
+    aspect: "web",
+    shots: ["/shots/engravia.png"],
     accent: "#A87D45",
     tint: "rgba(168,125,69,0.08)",
     blurb: "E-commerce for personalized engraved gifts — real-time customization preview, cart, and full checkout built end to end.",
@@ -126,10 +127,10 @@ const PROJECTS = [
   {
     slug: "yalla-admin",
     title: "Yalla Admin",
-    headline: "Ops at\na glance.",
     year: "2025",
     kind: "Web Dashboard",
-    shot: "/shots/yalla-admin.png",
+    aspect: "web",
+    shots: ["/shots/yalla-admin.png"],
     accent: "#8B6FD4",
     tint: "rgba(139,111,212,0.08)",
     blurb: "Operations console for the Yalla platform — KYC review, wallet top-ups, driver management, ride audits, and live trip maps.",
@@ -139,10 +140,10 @@ const PROJECTS = [
   {
     slug: "admin",
     title: "Admin Suite",
-    headline: "The engine\nroom.",
     year: "2023–25",
     kind: "Web Dashboards",
-    shot: "/shots/dashboards.png",
+    aspect: "web",
+    shots: ["/shots/dashboards.png"],
     accent: "#4A9B6F",
     tint: "rgba(74,155,111,0.08)",
     blurb: "The back offices behind the products — orders, inventory, live ops, analytics. What clients never see but can't run without.",
@@ -437,8 +438,21 @@ function MagneticBtn({ href, children, primary = false, style: extStyle = {} }) 
 
 function SpotlightCard({ p, delay = 0 }) {
   const cardRef = useRef(null);
-  const [imgOk, setImgOk] = useState(true);
   const frameRef = useRef(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [imgErrors, setImgErrors] = useState({});
+
+  const shots = p.shots || [p.shot].filter(Boolean);
+  const hasMany = shots.length > 1;
+
+  // aspect ratios: phone = tall portrait, wide = landscape game, web = landscape
+  const imgHeight = p.aspect === "phone"
+    ? (p.bento === "hero" ? 420 : 360)
+    : p.aspect === "wide"
+    ? (p.bento === "hero" ? 320 : 240)
+    : (p.bento === "hero" ? 280 : 220);
+
+  const objPosition = p.aspect === "phone" ? "top center" : "center";
 
   const onMove = useCallback((e) => {
     if (!cardRef.current) return;
@@ -459,6 +473,16 @@ function SpotlightCard({ p, delay = 0 }) {
   }, []);
 
   useEffect(() => () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); }, []);
+
+  const goTo = (idx, e) => {
+    e.stopPropagation();
+    setActiveIdx(idx);
+  };
+  const prev = (e) => { e.stopPropagation(); setActiveIdx(i => (i - 1 + shots.length) % shots.length); };
+  const next = (e) => { e.stopPropagation(); setActiveIdx(i => (i + 1) % shots.length); };
+
+  const currentSrc = shots[activeIdx];
+  const isError = imgErrors[activeIdx];
 
   return (
     <Reveal delay={delay}>
@@ -485,25 +509,27 @@ function SpotlightCard({ p, delay = 0 }) {
           transition: "opacity 0.3s",
         }} />
 
-        {/* Image */}
+        {/* Image / Carousel */}
         <div style={{
           position: "relative", overflow: "hidden", flexShrink: 0,
           background: `linear-gradient(145deg, ${p.tint}, rgba(0,0,0,0.5))`,
-          height: p.bento === "hero" ? 320 : p.bento === "tall" ? 260 : 200,
+          height: imgHeight,
         }}>
-          {imgOk && (
-            <img src={p.shot} alt={p.title} onError={() => setImgOk(false)}
+          {!isError ? (
+            <img
+              key={currentSrc}
+              src={currentSrc}
+              alt={`${p.title} screenshot ${activeIdx + 1}`}
+              onError={() => setImgErrors(e => ({ ...e, [activeIdx]: true }))}
               style={{
                 width: "100%", height: "100%", display: "block",
                 objectFit: "cover",
-                objectPosition: p.kind === "Mobile App" || p.kind === "IoT + Mobile" || p.kind === "Game"
-                  ? "top center" : "center",
-                transition: `transform 0.65s ${TK.ease}`,
+                objectPosition: objPosition,
+                transition: `transform 0.65s ${TK.ease}, opacity 0.3s`,
               }}
               className="card-img"
             />
-          )}
-          {!imgOk && (
+          ) : (
             <div style={{
               position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
             }}>
@@ -512,11 +538,13 @@ function SpotlightCard({ p, delay = 0 }) {
               </span>
             </div>
           )}
+
           {/* Gradient overlay */}
           <div aria-hidden style={{
             position: "absolute", inset: 0,
             background: "linear-gradient(to bottom, transparent 45%, rgba(20,20,22,0.85) 100%)",
           }} />
+
           {/* Badges */}
           <div style={{ position: "absolute", top: 12, left: 12, display: "flex", gap: 6, zIndex: 2 }}>
             {p.badge && (
@@ -540,6 +568,51 @@ function SpotlightCard({ p, delay = 0 }) {
               {p.year}
             </span>
           </div>
+
+          {/* Carousel nav arrows */}
+          {hasMany && (
+            <>
+              <button onClick={prev} aria-label="Previous" style={{
+                position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
+                zIndex: 3, width: 28, height: 28, borderRadius: 9999,
+                background: "rgba(9,9,11,0.7)", border: `1px solid ${TK.border}`,
+                color: TK.text, fontSize: 12, cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                backdropFilter: "blur(6px)",
+              }}>‹</button>
+              <button onClick={next} aria-label="Next" style={{
+                position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)",
+                zIndex: 3, width: 28, height: 28, borderRadius: 9999,
+                background: "rgba(9,9,11,0.7)", border: `1px solid ${TK.border}`,
+                color: TK.text, fontSize: 12, cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                backdropFilter: "blur(6px)",
+              }}>›</button>
+            </>
+          )}
+
+          {/* Dot indicators */}
+          {hasMany && (
+            <div style={{
+              position: "absolute", bottom: 10, left: "50%", transform: "translateX(-50%)",
+              display: "flex", gap: 5, zIndex: 3,
+            }}>
+              {shots.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => goTo(i, e)}
+                  aria-label={`Go to screenshot ${i + 1}`}
+                  style={{
+                    width: i === activeIdx ? 18 : 6,
+                    height: 6, borderRadius: 9999, padding: 0,
+                    background: i === activeIdx ? p.accent : "rgba(255,255,255,0.3)",
+                    border: "none", cursor: "pointer",
+                    transition: `width 0.25s ${TK.ease}, background 0.25s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Content */}
